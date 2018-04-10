@@ -15,6 +15,7 @@ public class GameCanvas extends JPanel {
     private BufferedImage backBuffered;
     private Graphics graphics;
     private Random random;
+    private int count = 0;
 
     public GameCanvas() {
         // Set size
@@ -53,8 +54,13 @@ public class GameCanvas extends JPanel {
     }
 
     private void createStar() {
-        Star star = new Star(1024, this.random.nextInt(600), this.loadImage("resources/images/star.png"), 5, 5, this.random.nextInt(2) + 1);
-        this.stars.add(star);
+        if (this.count == 30) {
+            Star star = new Star(1024, this.random.nextInt(600), this.loadImage("resources/images/star.png"), 5, 5, this.random.nextInt(2) + 1);
+            this.stars.add(star);
+            this.count = 0;
+        } else {
+            this.count += 1;
+        }
     }
 
 
