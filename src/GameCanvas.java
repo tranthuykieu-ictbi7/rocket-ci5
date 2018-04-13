@@ -13,9 +13,11 @@ public class GameCanvas extends JPanel {
     private List<Star> stars;
 
     private BufferedImage backBuffered;
+    private Background background;
     private Graphics graphics;
     private Random random;
     private int count = 0;
+    private Player player;
 
     public GameCanvas() {
         // Set size
@@ -23,12 +25,16 @@ public class GameCanvas extends JPanel {
         this.setupBackBuffered();
         this.stars = new ArrayList<>();
         this.random = new Random();
+        this.background = new Background(0, 0, Color.BLACK);
+        this.player = new Player(200, 200, Color.RED);
         this.setVisible(true);
     }
 
     private void setupBackBuffered() {
-        this.backBuffered = new BufferedImage(1024, 600, BufferedImage.TYPE_4BYTE_ABGR);
+        this.backBuffered = new BufferedImage(1024, 600, BufferedImage.TYPE_4BYTE_ABGR); //khoi tao object
         this.graphics = this.backBuffered.getGraphics();
+        BufferedImage back2 = this.backBuffered; //dang tro cung den mot object (cung chua mot dia chi)
+        back2.setRGB(20, 20, 255);
     }
 
     @Override
@@ -37,14 +43,10 @@ public class GameCanvas extends JPanel {
     }
 
     public void renderAll() {
-        this.drawBackground();
+        this.background.render(this.graphics);
         this.stars.forEach(star -> star.render(graphics));
+        this.player.render(this.graphics);
         this.repaint();
-    }
-
-    private void drawBackground() {
-        this.graphics.setColor(Color.BLACK);
-        this.graphics.fillRect(0, 0, 1024, 600);
     }
 
     public void runAll() {
