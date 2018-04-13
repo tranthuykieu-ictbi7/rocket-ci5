@@ -26,7 +26,7 @@ public class GameCanvas extends JPanel {
         this.stars = new ArrayList<>();
         this.random = new Random();
         this.background = new Background(0, 0, Color.BLACK);
-        this.player = new Player(200, 200, Color.RED);
+        this.player = new Player(new Vector2D(200, 200), Color.RED);
         this.setVisible(true);
     }
 
@@ -57,7 +57,13 @@ public class GameCanvas extends JPanel {
 
     private void createStar() {
         if (this.count == 30) {
-            Star star = new Star(1024, this.random.nextInt(600), this.loadImage("resources/images/star.png"), 5, 5, this.random.nextInt(2) + 1);
+            Star star = new Star(
+                    new Vector2D(1024, this.random.nextInt(600)),
+                    this.loadImage("resources/images/star.png"),
+                    5,
+                    5,
+                    new Vector2D(this.random.nextInt(2) + 1, 0)
+            );
             this.stars.add(star);
             this.count = 0;
         } else {
