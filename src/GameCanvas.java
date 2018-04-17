@@ -19,7 +19,7 @@ public class GameCanvas extends JPanel {
     private int count = 0;
     private int countEnemy = 0;
     private List<Enemy> enemies;
-    private Player player;
+    public Player player;
 
     public GameCanvas() {
         // Set size
@@ -28,7 +28,8 @@ public class GameCanvas extends JPanel {
         this.stars = new ArrayList<>();
         this.random = new Random();
         this.background = new Background(0, 0, Color.BLACK);
-        this.player = new Player(new Vector2D(200, 200), Color.RED);
+        this.player = new Player();
+        this.player.position.set(200, 200);
         this.enemies = new ArrayList<>();
 //        this.enemy = new Enemy(new Vector2D(1000, 400), this.loadImage("resources/images/circle.png"));
         this.setVisible(true);
