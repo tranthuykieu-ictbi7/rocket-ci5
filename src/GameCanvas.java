@@ -17,7 +17,8 @@ public class GameCanvas extends JPanel {
     private Graphics graphics;
     private Random random;
     private int count = 0;
-    private Enemy enemy;
+    private int countEnemy = 0;
+    private List<Enemy> enemies;
     private Player player;
 
     public GameCanvas() {
@@ -28,7 +29,8 @@ public class GameCanvas extends JPanel {
         this.random = new Random();
         this.background = new Background(0, 0, Color.BLACK);
         this.player = new Player(new Vector2D(200, 200), Color.RED);
-        this.enemy = new Enemy(new Vector2D(1000, 400), this.loadImage("resources/images/circle.png"));
+        this.enemies = new ArrayList<>();
+//        this.enemy = new Enemy(new Vector2D(1000, 400), this.loadImage("resources/images/circle.png"));
         this.setVisible(true);
     }
 
@@ -48,7 +50,7 @@ public class GameCanvas extends JPanel {
         this.background.render(this.graphics);
         this.stars.forEach(star -> star.render(graphics));
         this.player.render(this.graphics);
-        this.enemy.render(this.graphics);
+        this.enemies.forEach(enemy -> enemy.render(graphics));
         this.repaint();
     }
 
@@ -57,12 +59,27 @@ public class GameCanvas extends JPanel {
         this.createStar();
         this.stars.forEach(star -> star.run());
         this.player.run();
-        this.enemy.velocity.set(
-                this.player.position
-                        .subtract(this.enemy.position)
+        this.createEnemy();
+        this.runEnemies();
+    }
+
+    private void createEnemy() {
+        if (this.countEnemy == 50) {
+            Enemy enemy = new Enemy(new Vector2D(this.random.nextInt(1024), this.random.nextInt(600)), this.loadImage("resources/images/circle.png"));
+            this.enemies.add(enemy);
+            this.countEnemy = 0;
+        } else {
+            this.countEnemy += 1;
+        }
+    }
+
+    private void runEnemies() {
+        this.enemies.forEach(enemy -> enemy.velocity.set(
+                player.position
+                        .subtract(enemy.position)
                         .normalize()
-        ).multiply(2);
-        this.enemy.run();
+        ).multiply(2));
+        this.enemies.forEach(enemy -> enemy.run());
     }
 
     private void createStar() {
