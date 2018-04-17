@@ -53,6 +53,7 @@ public class GameCanvas extends JPanel {
         // cap nhat tat ca moi thu
         this.createStar();
         this.stars.forEach(star -> star.run());
+        this.player.run();
     }
 
     private void createStar() {
