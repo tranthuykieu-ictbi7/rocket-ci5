@@ -85,13 +85,9 @@ public class GameCanvas extends JPanel {
 
     private void createStar() {
         if (this.count == 30) {
-            Star star = new Star(
-                    new Vector2D(1024, this.random.nextInt(600)),
-                    this.loadImage("resources/images/star.png"),
-                    5,
-                    5,
-                    new Vector2D(this.random.nextInt(2) + 1, 0)
-            );
+            Star star = new Star();
+            star.position.set(1024, this.random.nextInt(600));
+            star.velocity.set(this.random.nextInt(2) + 1, 0);
             this.stars.add(star);
             this.count = 0;
         } else {
