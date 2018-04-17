@@ -17,6 +17,7 @@ public class GameCanvas extends JPanel {
     private Graphics graphics;
     private Random random;
     private int count = 0;
+    private Enemy enemy;
     private Player player;
 
     public GameCanvas() {
@@ -27,6 +28,7 @@ public class GameCanvas extends JPanel {
         this.random = new Random();
         this.background = new Background(0, 0, Color.BLACK);
         this.player = new Player(new Vector2D(200, 200), Color.RED);
+        this.enemy = new Enemy(new Vector2D(1000, 400), this.loadImage("resources/images/circle.png"));
         this.setVisible(true);
     }
 
@@ -46,6 +48,7 @@ public class GameCanvas extends JPanel {
         this.background.render(this.graphics);
         this.stars.forEach(star -> star.render(graphics));
         this.player.render(this.graphics);
+        this.enemy.render(this.graphics);
         this.repaint();
     }
 
@@ -54,6 +57,12 @@ public class GameCanvas extends JPanel {
         this.createStar();
         this.stars.forEach(star -> star.run());
         this.player.run();
+        this.enemy.velocity.set(
+                this.player.position
+                        .subtract(this.enemy.position)
+                        .normalize()
+        ).multiply(2);
+        this.enemy.run();
     }
 
     private void createStar() {

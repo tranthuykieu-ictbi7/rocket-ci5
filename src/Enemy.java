@@ -11,8 +11,8 @@ public class Enemy {
         this.position = position;
         this.velocity = new Vector2D();
         this.image = image;
-        this.width = 10;
-        this.height = 10;
+        this.width = 20;
+        this.height = 20;
     }
 
     public void run() {
